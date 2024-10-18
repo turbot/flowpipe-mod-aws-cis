@@ -16,9 +16,6 @@ mod "aws_cis" {
     flowpipe {
       min_version = "1.0.0"
     }
-    mod "github.com/turbot/flowpipe-mod-detect-correct" {
-      version = "1.0.0-rc.0"
-    }
     mod "github.com/turbot/flowpipe-mod-aws-compliance" {
       version = "v1.0.0-rc.8"
     }
