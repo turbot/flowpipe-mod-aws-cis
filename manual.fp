@@ -2,6 +2,10 @@ pipeline "manual_detection" {
   title         = "Manual Detection"
   description   = "This is a detection that requires manual verification."
 
+  tags = {
+    folder = "Internal"
+  }
+
    param "database" {
     type        = connection.steampipe
     description = local.description_database
