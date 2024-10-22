@@ -19,49 +19,6 @@ locals {
   }
 }
 
-variable "cis_v300_4_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 section 4 pipelines to enable."
-
-  default = [
-    "cis_v300_4_1",
-    "cis_v300_4_2",
-    "cis_v300_4_3",
-    "cis_v300_4_4",
-    "cis_v300_4_5",
-    "cis_v300_4_6",
-    "cis_v300_4_7",
-    "cis_v300_4_8",
-    "cis_v300_4_9",
-    "cis_v300_4_10",
-    "cis_v300_4_11",
-    "cis_v300_4_12",
-    "cis_v300_4_13",
-    "cis_v300_4_14",
-    "cis_v300_4_15",
-    "cis_v300_4_16"
-  ]
-
-  enum = [
-    "cis_v300_4_1",
-    "cis_v300_4_2",
-    "cis_v300_4_3",
-    "cis_v300_4_4",
-    "cis_v300_4_5",
-    "cis_v300_4_6",
-    "cis_v300_4_7",
-    "cis_v300_4_8",
-    "cis_v300_4_9",
-    "cis_v300_4_10",
-    "cis_v300_4_11",
-    "cis_v300_4_12",
-    "cis_v300_4_13",
-    "cis_v300_4_14",
-    "cis_v300_4_15",
-    "cis_v300_4_16"
-  ]
-}
-
 pipeline "cis_v300_4" {
   title         = "4 Monitoring"
   documentation = file("./cis_v300/docs/cis_v300_4.md")
@@ -95,8 +52,12 @@ pipeline "cis_v300_4" {
 
   step "pipeline" "cis_v300_4" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v300_4_enabled_pipelines
-    pipeline   = local.cis_v300_4_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v300_4_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v300_4_control_mapping[keys(local.cis_v300_4_control_mapping)[loop.index]]
 
     args = {
       database           = param.database

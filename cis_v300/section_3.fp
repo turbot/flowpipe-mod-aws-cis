@@ -75,8 +75,12 @@ pipeline "cis_v300_3" {
 
   step "pipeline" "cis_v300_3" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v300_3_enabled_pipelines
-    pipeline   = local.cis_v300_3_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v300_3_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v300_3_control_mapping[keys(local.cis_v300_3_control_mapping)[loop.index]]
 
     args = {
       database           = param.database

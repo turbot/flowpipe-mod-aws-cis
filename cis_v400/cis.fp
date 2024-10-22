@@ -14,7 +14,8 @@ pipeline "cis_v400" {
   #documentation = file("./cis_v400/docs/cis_overview.md")
 
   tags = {
-    folder = "CIS v4.0.0"
+    folder      = "CIS v4.0.0"
+    recommended = "true"
   }
 
   param "database" {

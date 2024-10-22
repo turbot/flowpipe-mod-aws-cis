@@ -12,35 +12,6 @@ locals {
   }
 }
 
-variable "cis_v300_2_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 section 2 pipelines to enable."
-
-  default = [
-    "cis_v300_2_1_1",
-    "cis_v300_2_1_2",
-    "cis_v300_2_1_3",
-    "cis_v300_2_1_4",
-    "cis_v300_2_2_1",
-    "cis_v300_2_3_1",
-    "cis_v300_2_3_2",
-    "cis_v300_2_3_3",
-    "cis_v300_2_4_1"
-  ]
-
-  enum = [
-    "cis_v300_2_1_1",
-    "cis_v300_2_1_2",
-    "cis_v300_2_1_3",
-    "cis_v300_2_1_4",
-    "cis_v300_2_2_1",
-    "cis_v300_2_3_1",
-    "cis_v300_2_3_2",
-    "cis_v300_2_3_3",
-    "cis_v300_2_4_1"
-  ]
-}
-
 pipeline "cis_v300_2" {
   title         = "2 Storage"
   documentation = file("./cis_v300/docs/cis_v300_2.md")
@@ -74,8 +45,12 @@ pipeline "cis_v300_2" {
 
   step "pipeline" "cis_v300_2" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v300_2_enabled_pipelines
-    pipeline   = local.cis_v300_2_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v300_2_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v300_2_control_mapping[keys(local.cis_v300_2_control_mapping)[loop.index]]
 
     args = {
       database           = param.database

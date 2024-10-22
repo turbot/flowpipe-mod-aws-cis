@@ -9,29 +9,6 @@ locals {
   }
 }
 
-variable "cis_v300_5_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 section 5 pipelines to enable."
-
-  default = [
-    "cis_v300_5_1",
-    "cis_v300_5_2",
-    "cis_v300_5_3",
-    "cis_v300_5_4",
-    "cis_v300_5_5",
-    "cis_v300_5_6"
-  ]
-
-  enum = [
-    "cis_v300_5_1",
-    "cis_v300_5_2",
-    "cis_v300_5_3",
-    "cis_v300_5_4",
-    "cis_v300_5_5",
-    "cis_v300_5_6"
-  ]
-}
-
 pipeline "cis_v300_5" {
   title         = "5 Networking"
   documentation = file("./cis_v300/docs/cis_v300_4.md")
@@ -65,8 +42,12 @@ pipeline "cis_v300_5" {
 
   step "pipeline" "cis_v300_5" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v300_5_enabled_pipelines
-    pipeline   = local.cis_v300_5_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v300_5_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v300_5_control_mapping[keys(local.cis_v300_5_control_mapping)[loop.index]]
 
     args = {
       database           = param.database

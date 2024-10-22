@@ -1,6 +1,6 @@
 # AWS CIS Mod for Flowpipe
 
-Pipelines to detect and remediate CIS misconfigurations in AWS resources.
+Pipelines to detect and remediate AWS resources non-compliant with CIS benchmarks.
 
 ## Documentation
 
@@ -69,22 +69,22 @@ Each variable has a default defined in its source file, e.g, `s3/s3_buckets_with
 The easiest approach is to setup your vars file, starting with the sample:
 
 ```sh
-cp cis.fpvars.example cis.fpvars
-vi cis.fpvars
+cp flowpipe.fpvars.example flowpipe.fpvars
+vi flowpipe.fpvars
 
-flowpipe pipeline run cis_v400 --var-file=cis.fpvars
+flowpipe pipeline run cis_v400 --var-file=flowpipe.fpvars
 ```
 
 Alternatively, you can pass variables on the command line:
 
 ```sh
-flowpipe pipeline run cis_v400 --var=kms_master_key_id="1234abcd-12ab-34cd-56ef-1234567890ab"
+flowpipe pipeline run cis_v400 --var notifier=notifier.default
 ```
 
 Or through environment variables:
 
 ```sh
-export kms_master_key_id="1234abcd-12ab-34cd-56ef-1234567890ab"
+export FP_VAR_notifier="notifier.default"
 flowpipe pipeline run cis_v400
 ```
 

@@ -8,34 +8,14 @@ locals {
   }
 }
 
-variable "cis_v300_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 pipelines to enable."
-
-  default = [
-    "cis_v300_1",
-    "cis_v300_2",
-    "cis_v300_3",
-    "cis_v300_4",
-    "cis_v300_5"
-  ]
-
-  enum = [
-    "cis_v300_1",
-    "cis_v300_2",
-    "cis_v300_3",
-    "cis_v300_4",
-    "cis_v300_5"
-  ]
-}
-
 pipeline "cis_v300" {
   title         = "CIS v3.0.0"
   description   = "The CIS Amazon Web Services Foundations Benchmark provides prescriptive guidance for configuring security options for a subset of Amazon Web Services with an emphasis on foundational, testable, and architecture agnostic settings."
   #documentation = file("./cis_v300/docs/cis_overview.md")
 
   tags = {
-    folder = "CIS v3.0.0"
+    folder      = "CIS v3.0.0"
+    recommended = "true"
   }
 
   param "database" {
@@ -62,8 +42,13 @@ pipeline "cis_v300" {
   }
 
   step "pipeline" "run_pipelines" {
-    for_each = var.cis_v300_enabled_pipelines
-    pipeline = local.cis_v300_control_mapping[each.value]
+    depends_on = [step.message.header]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v300_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v300_control_mapping[keys(local.cis_v300_control_mapping)[loop.index]]
 
     args = {
       database           = param.database
