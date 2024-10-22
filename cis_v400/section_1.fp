@@ -1,14 +1,14 @@
 locals {
   cis_v400_1_control_mapping = {
-    cis_v400_1_1  = pipeline.cis_v400_1_1
-    cis_v400_1_2  = pipeline.cis_v400_1_2
-    cis_v400_1_3  = pipeline.cis_v400_1_3
-    cis_v400_1_4  = pipeline.cis_v400_1_4
-    cis_v400_1_5  = pipeline.cis_v400_1_5
-    cis_v400_1_6  = pipeline.cis_v400_1_6
-    cis_v400_1_7  = pipeline.cis_v400_1_7
-    cis_v400_1_8  = pipeline.cis_v400_1_8
-    cis_v400_1_9  = pipeline.cis_v400_1_9
+    cis_v400_1_01  = pipeline.cis_v400_1_1
+    cis_v400_1_02  = pipeline.cis_v400_1_2
+    cis_v400_1_03  = pipeline.cis_v400_1_3
+    cis_v400_1_04  = pipeline.cis_v400_1_4
+    cis_v400_1_05  = pipeline.cis_v400_1_5
+    cis_v400_1_06  = pipeline.cis_v400_1_6
+    cis_v400_1_07  = pipeline.cis_v400_1_7
+    cis_v400_1_08  = pipeline.cis_v400_1_8
+    cis_v400_1_09  = pipeline.cis_v400_1_9
     cis_v400_1_10 = pipeline.cis_v400_1_10
     cis_v400_1_11 = pipeline.cis_v400_1_11
     cis_v400_1_12 = pipeline.cis_v400_1_12
@@ -23,61 +23,6 @@ locals {
     cis_v400_1_21 = pipeline.cis_v400_1_21
     cis_v400_1_22 = pipeline.cis_v400_1_22
   }
-}
-
-variable "cis_v400_1_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v4.0.0 section Identity and Access Management pipelines to enable."
-
-  default = [
-    "cis_v400_1_1",
-    "cis_v400_1_2",
-    "cis_v400_1_3",
-    "cis_v400_1_4",
-    "cis_v400_1_5",
-    "cis_v400_1_6",
-    "cis_v400_1_7",
-    "cis_v400_1_8",
-    "cis_v400_1_9",
-    "cis_v400_1_10",
-    "cis_v400_1_11",
-    "cis_v400_1_12",
-    "cis_v400_1_13",
-    "cis_v400_1_14",
-    "cis_v400_1_15",
-    "cis_v400_1_16",
-    "cis_v400_1_17",
-    "cis_v400_1_18",
-    "cis_v400_1_19",
-    "cis_v400_1_20",
-    "cis_v400_1_21",
-    "cis_v400_1_22"
-  ]
-
-  enum = [
-    "cis_v400_1_1",
-    "cis_v400_1_2",
-    "cis_v400_1_3",
-    "cis_v400_1_4",
-    "cis_v400_1_5",
-    "cis_v400_1_6",
-    "cis_v400_1_7",
-    "cis_v400_1_8",
-    "cis_v400_1_9",
-    "cis_v400_1_10",
-    "cis_v400_1_11",
-    "cis_v400_1_12",
-    "cis_v400_1_13",
-    "cis_v400_1_14",
-    "cis_v400_1_15",
-    "cis_v400_1_16",
-    "cis_v400_1_17",
-    "cis_v400_1_18",
-    "cis_v400_1_19",
-    "cis_v400_1_20",
-    "cis_v400_1_21",
-    "cis_v400_1_22"
-  ]
 }
 
 pipeline "cis_v400_1" {
@@ -113,8 +58,12 @@ pipeline "cis_v400_1" {
 
   step "pipeline" "cis_v400_1" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v400_1_enabled_pipelines
-    pipeline   = local.cis_v400_1_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v400_1_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v400_1_control_mapping[keys(local.cis_v400_1_control_mapping)[loop.index]]
 
     args = {
       database           = param.database
@@ -229,7 +178,7 @@ pipeline "cis_v400_1_3" {
   documentation = file("./cis_v400/docs/cis_v400_1_3.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -279,7 +228,7 @@ pipeline "cis_v400_1_4" {
   documentation = file("./cis_v400/docs/cis_v400_1_4.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+   folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -322,7 +271,7 @@ pipeline "cis_v400_1_5" {
   documentation = file("./cis_v400/docs/cis_v400_1_5.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+   folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -365,7 +314,7 @@ pipeline "cis_v400_1_6" {
   documentation = file("./cis_v400/docs/cis_v400_1_6.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+   folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -408,7 +357,7 @@ pipeline "cis_v400_1_7" {
   documentation = file("./cis_v400/docs/cis_v400_1_7.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -451,7 +400,7 @@ pipeline "cis_v400_1_8" {
   documentation = file("./cis_v400/docs/cis_v400_1_8.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -501,7 +450,7 @@ pipeline "cis_v400_1_9" {
   documentation = file("./cis_v400/docs/cis_v400_1_9.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -551,7 +500,7 @@ pipeline "cis_v400_1_10" {
   documentation = file("./cis_v400/docs/cis_v400_1_10.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -594,7 +543,7 @@ pipeline "cis_v400_1_11" {
   documentation = file("./cis_v400/docs/cis_v400_1_11.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -644,7 +593,7 @@ pipeline "cis_v400_1_12" {
   documentation = file("./cis_v400/docs/cis_v400_1_12.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -694,7 +643,7 @@ pipeline "cis_v400_1_13" {
   documentation = file("./cis_v400/docs/cis_v400_1_13.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -744,7 +693,7 @@ pipeline "cis_v400_1_14" {
   documentation = file("./cis_v400/docs/cis_v400_1_14.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -794,7 +743,7 @@ pipeline "cis_v400_1_15" {
   documentation = file("./cis_v400/docs/cis_v400_1_15.md")
 
   tags = {
-	  folder = "CIS v4.0.0/1 Identity and Access Management"
+    folder = "CIS v4.0.0/1 Identity and Access Management"
   }
 
   param "database" {
@@ -928,7 +877,7 @@ pipeline "cis_v400_1_17" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_account_without_support_role
+    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_accounts_without_support_role
 
     args = {
       database           = param.database

@@ -1,14 +1,14 @@
 locals {
   cis_v400_4_control_mapping = {
-    cis_v400_4_1  = pipeline.cis_v400_4_1
-    cis_v400_4_2  = pipeline.cis_v400_4_2
-    cis_v400_4_3  = pipeline.cis_v400_4_3
-    cis_v400_4_4  = pipeline.cis_v400_4_4
-    cis_v400_4_5  = pipeline.cis_v400_4_5
-    cis_v400_4_6  = pipeline.cis_v400_4_6
-    cis_v400_4_7  = pipeline.cis_v400_4_7
-    cis_v400_4_8  = pipeline.cis_v400_4_8
-    cis_v400_4_9  = pipeline.cis_v400_4_9
+    cis_v400_4_01  = pipeline.cis_v400_4_1
+    cis_v400_4_02  = pipeline.cis_v400_4_2
+    cis_v400_4_03  = pipeline.cis_v400_4_3
+    cis_v400_4_04  = pipeline.cis_v400_4_4
+    cis_v400_4_05  = pipeline.cis_v400_4_5
+    cis_v400_4_06  = pipeline.cis_v400_4_6
+    cis_v400_4_07  = pipeline.cis_v400_4_7
+    cis_v400_4_08  = pipeline.cis_v400_4_8
+    cis_v400_4_09  = pipeline.cis_v400_4_9
     cis_v400_4_10 = pipeline.cis_v400_4_10
     cis_v400_4_11 = pipeline.cis_v400_4_11
     cis_v400_4_12 = pipeline.cis_v400_4_12
@@ -95,8 +95,11 @@ pipeline "cis_v400_4" {
 
   step "pipeline" "cis_v400_4" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v400_4_enabled_pipelines
-    pipeline   = local.cis_v400_4_control_mapping[each.value]
+    loop {
+      until = loop.index >= (length(keys(local.cis_v400_4_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v400_1_control_mapping[keys(local.cis_v400_4_control_mapping)[loop.index]]
 
     args = {
       database           = param.database

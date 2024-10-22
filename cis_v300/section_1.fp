@@ -928,7 +928,7 @@ pipeline "cis_v300_1_17" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_account_without_support_role
+    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_accounts_without_support_role
 
     args = {
       database           = param.database

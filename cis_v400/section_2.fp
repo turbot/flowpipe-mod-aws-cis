@@ -1,44 +1,15 @@
 locals {
   cis_v400_2_control_mapping = {
-    cis_v400_2_1_1 = pipeline.cis_v400_2_1_1
-    cis_v400_2_1_2 = pipeline.cis_v400_2_1_2
-    cis_v400_2_1_3 = pipeline.cis_v400_2_1_3
-    cis_v400_2_1_4 = pipeline.cis_v400_2_1_4
-    cis_v400_2_2_1 = pipeline.cis_v400_2_2_1
-    cis_v400_2_2_2 = pipeline.cis_v400_2_2_2
-    cis_v400_2_2_3 = pipeline.cis_v400_2_2_3
-    cis_v400_2_2_4 = pipeline.cis_v400_2_2_4
-    cis_v400_2_3_1 = pipeline.cis_v400_2_3_1
+    cis_v400_2_01_01 = pipeline.cis_v400_2_1_1
+    cis_v400_2_01_02 = pipeline.cis_v400_2_1_2
+    cis_v400_2_01_03 = pipeline.cis_v400_2_1_3
+    cis_v400_2_01_04 = pipeline.cis_v400_2_1_4
+    cis_v400_2_02_01 = pipeline.cis_v400_2_2_1
+    cis_v400_2_02_02 = pipeline.cis_v400_2_2_2
+    cis_v400_2_02_03 = pipeline.cis_v400_2_2_3
+    cis_v400_2_02_04 = pipeline.cis_v400_2_2_4
+    cis_v400_2_03_01 = pipeline.cis_v400_2_3_1
   }
-}
-
-variable "cis_v400_2_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v4.0.0 section 2 pipelines to enable."
-
-  default = [
-    "cis_v400_2_1_1",
-    "cis_v400_2_1_2",
-    "cis_v400_2_1_3",
-    "cis_v400_2_1_4",
-    "cis_v400_2_2_1",
-    "cis_v400_2_2_2",
-    "cis_v400_2_2_3",
-    "cis_v400_2_2_4",
-    "cis_v400_2_3_1"
-  ]
-
-  enum = [
-    "cis_v400_2_1_1",
-    "cis_v400_2_1_2",
-    "cis_v400_2_1_3",
-    "cis_v400_2_1_4",
-    "cis_v400_2_2_1",
-    "cis_v400_2_2_2",
-    "cis_v400_2_2_3",
-    "cis_v400_2_2_4",
-    "cis_v400_2_3_1"
-  ]
 }
 
 pipeline "cis_v400_2" {
@@ -74,8 +45,12 @@ pipeline "cis_v400_2" {
 
   step "pipeline" "cis_v400_2" {
     depends_on = [step.message.header]
-    for_each   = var.cis_v400_2_enabled_pipelines
-    pipeline   = local.cis_v400_2_control_mapping[each.value]
+
+    loop {
+      until = loop.index >= (length(keys(local.cis_v400_2_control_mapping))-1)
+    }
+
+    pipeline = local.cis_v400_1_control_mapping[keys(local.cis_v400_2_control_mapping)[loop.index]]
 
     args = {
       database           = param.database
