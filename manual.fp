@@ -1,5 +1,5 @@
 pipeline "manual_detection" {
-  title         = "Manual Detection"
+  title         = "Manual detection"
   description   = "This is a detection that requires manual verification."
 
   tags = {
