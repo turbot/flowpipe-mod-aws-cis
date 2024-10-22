@@ -19,49 +19,6 @@ locals {
   }
 }
 
-variable "cis_v400_4_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 section 4 pipelines to enable."
-
-  default = [
-    "cis_v400_4_1",
-    "cis_v400_4_2",
-    "cis_v400_4_3",
-    "cis_v400_4_4",
-    "cis_v400_4_5",
-    "cis_v400_4_6",
-    "cis_v400_4_7",
-    "cis_v400_4_8",
-    "cis_v400_4_9",
-    "cis_v400_4_10",
-    "cis_v400_4_11",
-    "cis_v400_4_12",
-    "cis_v400_4_13",
-    "cis_v400_4_14",
-    "cis_v400_4_15",
-    "cis_v400_4_16"
-  ]
-
-  enum = [
-    "cis_v400_4_1",
-    "cis_v400_4_2",
-    "cis_v400_4_3",
-    "cis_v400_4_4",
-    "cis_v400_4_5",
-    "cis_v400_4_6",
-    "cis_v400_4_7",
-    "cis_v400_4_8",
-    "cis_v400_4_9",
-    "cis_v400_4_10",
-    "cis_v400_4_11",
-    "cis_v400_4_12",
-    "cis_v400_4_13",
-    "cis_v400_4_14",
-    "cis_v400_4_15",
-    "cis_v400_4_16"
-  ]
-}
-
 pipeline "cis_v400_4" {
   title         = "4 Monitoring"
   documentation = file("./cis_v400/docs/cis_v400_4.md")

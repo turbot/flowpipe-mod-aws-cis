@@ -13,35 +13,6 @@ locals {
   }
 }
 
-variable "cis_v300_3_enabled_pipelines" {
-  type        = list(string)
-  description = "List of CIS v3.0.0 section 3 pipelines to enable."
-
-  default = [
-    "cis_v300_3_1",
-    "cis_v300_3_2",
-    "cis_v300_3_3",
-    "cis_v300_3_4",
-    "cis_v300_3_5",
-    "cis_v300_3_6",
-    "cis_v300_3_7",
-    "cis_v300_3_8",
-    "cis_v300_3_9"
-  ]
-
-  enum = [
-    "cis_v300_3_1",
-    "cis_v300_3_2",
-    "cis_v300_3_3",
-    "cis_v300_3_4",
-    "cis_v300_3_5",
-    "cis_v300_3_6",
-    "cis_v300_3_7",
-    "cis_v300_3_8",
-    "cis_v300_3_9"
-  ]
-}
-
 pipeline "cis_v300_3" {
   title         = "3 Logging"
   documentation = file("./cis_v300/docs/cis_v300_3.md")
