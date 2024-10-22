@@ -17,7 +17,7 @@ mod "aws_cis" {
       min_version = "1.0.0"
     }
     mod "github.com/turbot/flowpipe-mod-aws-compliance" {
-      version = "v1.0.0-rc.8"
+      version = "^1"
     }
   }
 }
