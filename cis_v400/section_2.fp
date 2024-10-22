@@ -50,7 +50,7 @@ pipeline "cis_v400_2" {
       until = loop.index >= (length(keys(local.cis_v400_2_control_mapping))-1)
     }
 
-    pipeline = local.cis_v400_1_control_mapping[keys(local.cis_v400_2_control_mapping)[loop.index]]
+    pipeline = local.cis_v400_2_control_mapping[keys(local.cis_v400_2_control_mapping)[loop.index]]
 
     args = {
       database           = param.database
