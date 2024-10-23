@@ -14,6 +14,7 @@ locals {
 
 pipeline "cis_v400_2" {
   title         = "2 Storage"
+  description   = "This section contains recommendations for configuring AWS Storage."
   documentation = file("./cis_v400/docs/cis_v400_2.md")
 
   tags = {
@@ -64,6 +65,7 @@ pipeline "cis_v400_2" {
 # TODO: Is there a way to include subsections without cyclic dependencies? Do we want them?
 pipeline "cis_v400_2_1" {
   title         = "2.1 Simple Storage Service (S3)"
+  description   = "This section contains recommendations for configuring AWS Simple Storage Service (S3) Buckets."
   #documentation = file("./cis_v400/docs/cis_v400_2_1.md")
 
   param "database" {
@@ -112,6 +114,7 @@ pipeline "cis_v400_2_1" {
 
 pipeline "cis_v400_2_1_1" {
   title         = "2.1.1 Ensure S3 Bucket Policy is set to deny HTTP requests"
+  description   = "At the Amazon S3 bucket level, you can configure permissions through a bucket policy making the objects accessible only through HTTPS."
   documentation = file("./cis_v400/docs/cis_v400_2_1_1.md")
 
   tags = {
@@ -162,6 +165,7 @@ pipeline "cis_v400_2_1_1" {
 
 pipeline "cis_v400_2_1_2" {
   title         = "2.1.2 Ensure MFA Delete is enabled on S3 buckets"
+  description   = "Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication."
   documentation = file("./cis_v400/docs/cis_v400_2_1_2.md")
 
   tags = {
@@ -205,6 +209,7 @@ pipeline "cis_v400_2_1_2" {
 
 pipeline "cis_v400_2_1_3" {
   title         = "2.1.3 Ensure all data in Amazon S3 has been discovered, classified, and secured when necessary"
+  description   = "Amazon S3 buckets can contain sensitive data, that for security purposes should be discovered, monitored, classified and protected. Macie along with other 3rd party tools can automatically provide an inventory of Amazon S3 buckets."
   documentation = file("./cis_v400/docs/cis_v400_2_1_3.md")
 
   tags = {
@@ -247,7 +252,8 @@ pipeline "cis_v400_2_1_3" {
 }
 
 pipeline "cis_v400_2_1_4" {
-  title          = "2.1.4 Ensure that S3 is configured with 'Block Public Access' enabled"
+  title         = "2.1.4 Ensure that S3 is configured with 'Block Public Access' enabled"
+  description   = "Amazon S3 provides `Block public access (bucket settings)` and `Block public access (account settings)` to help you manage public access to Amazon S3 resources."
   documentation = file("./cis_v400/docs/cis_v400_2_1_4.md")
 
   tags = {
@@ -298,6 +304,7 @@ pipeline "cis_v400_2_1_4" {
 
 pipeline "cis_v400_2_2_1" {
   title         = "2.2.1 Ensure that encryption-at-rest is enabled for RDS instances"
+  description   = "Amazon RDS encrypted DB instances use the industry standard AES-256 encryption algorithm to encrypt your data on the server that hosts your Amazon RDS DB instances."
   documentation = file("./cis_v400/docs/cis_v400_2_2_1.md")
 
   tags = {
@@ -341,6 +348,7 @@ pipeline "cis_v400_2_2_1" {
 
 pipeline "cis_v400_2_2_2" {
   title         = "2.2.2 Ensure the Auto Minor Version Upgrade feature is enabled for RDS instances"
+  description   = "Ensure that RDS database instances have the Auto Minor Version Upgrade flag enabled in order to receive automatically minor engine upgrades during the specified maintenance window."
   documentation = file("./cis_v400/docs/cis_v400_2_2_2.md")
 
   tags = {
@@ -391,6 +399,7 @@ pipeline "cis_v400_2_2_2" {
 
 pipeline "cis_v400_2_2_3" {
   title         = "2.2.3 Ensure that RDS instances are not publicly accessible"
+  description   = "Ensure and verify that RDS database instances provisioned in your AWS account do restrict unauthorized access in order to minimize security risks."
   documentation = file("./cis_v400/docs/cis_v400_2_2_3.md")
 
   tags = {
@@ -441,6 +450,7 @@ pipeline "cis_v400_2_2_3" {
 
 pipeline "cis_v400_2_2_4" {
   title         = "2.2.4 Ensure Multi-AZ deployments are used for enhanced availability in Amazon RDS"
+  description   = "Amazon RDS offers Multi-AZ deployments that provide enhanced availability and durability for your databases, using synchronous replication to replicate data to a standby instance in a different Availability Zone (AZ)."
   documentation = file("./cis_v400/docs/cis_v400_2_2_4.md")
 
   tags = {
@@ -491,6 +501,7 @@ pipeline "cis_v400_2_2_4" {
 
 pipeline "cis_v400_2_3_1" {
   title         = "2.3.1 Ensure that encryption is enabled for EFS file systems"
+  description   = "EFS data should be encrypted at rest using AWS KMS (Key Management Service)."
   documentation = file("./cis_v400/docs/cis_v400_2_3_1.md")
 
   tags = {
