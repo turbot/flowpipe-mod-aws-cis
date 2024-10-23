@@ -60,19 +60,37 @@ Install the dependencies:
 flowpipe mod install
 ```
 
+### Running CIS Pipelines
+
+To run your first CIS pipeline, you'll need to ensure your Steampipe server is up and running:
+
+```sh
+steampipe service start
+```
+
+To find your desired CIS pipeline, you can filter the `pipeline list` output:
+
+```sh
+flowpipe pipeline list | grep "cis"
+```
+
+Then run your chosen pipeline:
+
+```sh
+flowpipe pipeline run cis_v400
+```
+
+By default the above approach would find the relevant resources and then send a message to your configured [notifier](https://flowpipe.io/docs/reference/config-files/notifier).
+
 ### Configure Variables
 
 Several pipelines have [input variables](https://flowpipe.io/docs/build/mod-variables#input-variables) that can be configured to better match your environment and requirements.
 
-Each variable has a default defined in its source file, e.g, `s3/s3_buckets_with_default_encryption_disabled.fp` (or `variables.fp` for more generic variables), but these can be overwritten in several ways:
-
-The easiest approach is to setup your vars file, starting with the sample:
+The easiest approach is to setup your vars file, starting with the example file:
 
 ```sh
 cp flowpipe.fpvars.example flowpipe.fpvars
 vi flowpipe.fpvars
-
-flowpipe pipeline run cis_v400 --var-file=flowpipe.fpvars
 ```
 
 Alternatively, you can pass variables on the command line:
@@ -89,44 +107,6 @@ flowpipe pipeline run cis_v400
 ```
 
 For more information, please see [Passing Input Variables](https://flowpipe.io/docs/build/mod-variables#passing-input-variables)
-
-### Running CIS Pipelines
-
-To run your first detection, you'll need to ensure your Steampipe server is up and running:
-
-```sh
-steampipe service start
-```
-
-To find your desired detection, you can filter the `pipeline list` output:
-
-```sh
-flowpipe pipeline list | grep "cis"
-```
-
-Then run your chosen pipeline:
-
-```sh
-flowpipe pipeline run cis_v400
-```
-
-By default the above approach would find the relevant resources and then send a message to your configured [notifier](https://flowpipe.io/docs/reference/config-files/notifier).
-
-However;  you can request via an [Input Step](https://flowpipe.io/docs/build/input) a corrective action to run against each detection result; this behavior is achieved by setting `approvers` either as a variable or for a one-off approach, by passing `approvers` as an argument.
-
-> Note: This approach requires running `flowpipe server` as it uses an `input` step.
-
-```sh
-flowpipe pipeline run cis_v400 --host local --arg='approvers=["default"]'
-```
-
-However; if you have configured a non-empty list for your `approvers` variable, you will need to override it as below:
-
-```sh
-flowpipe pipeline run cis_v400 --arg='approvers=[]'
-```
-
-Finally, each detection pipeline has a corresponding [Query Trigger](https://flowpipe.io/docs/flowpipe-hcl/trigger/query), these are disabled by default allowing for you to configure only those which are required, see the [docs](https://hub.flowpipe.io/mods/turbot/aws_cis/triggers) for more information.
 
 ## Open Source & Contributing
 
