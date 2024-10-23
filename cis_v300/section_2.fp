@@ -61,60 +61,6 @@ pipeline "cis_v300_2" {
   }
 }
 
-/*
-# TODO: Is there a way to include subsections without cyclic dependencies? Do we want them?
-pipeline "cis_v300_2_1" {
-  title         = "2.1 Simple Storage Service (S3)"
-  #documentation = file("./cis_v300/docs/cis_v300_2_1.md")
-
-  tags = {
-    folder = "CIS v3.0.0/2 Storage/2.1 Simple Storage Service (S3)"
-  }
-
-  param "database" {
-    type        = connection.steampipe
-    description = local.description_database
-    default     = var.database
-  }
-
-  param "notifier" {
-    type        = notifier
-    description = local.description_notifier
-    default     = var.notifier
-  }
-
-  param "notification_level" {
-    type        = string
-    description = local.description_notifier_level
-    default     = var.notification_level
-  }
-
-  param "approvers" {
-    type        = list(notifier)
-    description = local.description_approvers
-    default     = var.approvers
-  }
-
-  step "message" "header" {
-    notifier = param.notifier
-    text     = "2.1 Simple Storage service (S3)"
-  }
-
-  step "pipeline" "run_pipelines" {
-    depends_on = [step.message.header]
-    for_each   = var.cis_v300_2_1_enabled_pipelines
-    pipeline   = local.cis_v300_2_1_control_mapping[each.value]
-
-    args = {
-      database           = param.database
-      notifier           = param.notifier
-      notification_level = param.notification_level
-      approvers          = param.approvers
-    }
-  }
-}
-*/
-
 pipeline "cis_v300_2_1_1" {
   title         = "2.1.1 Ensure S3 Bucket Policy is set to deny HTTP requests"
   description   = "At the Amazon S3 bucket level, you can configure permissions through a bucket policy making the objects accessible only through HTTPS."
