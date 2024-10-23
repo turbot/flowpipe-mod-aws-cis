@@ -86,7 +86,7 @@ By default the above approach would find the relevant resources and then send a 
 
 Several pipelines have [input variables](https://flowpipe.io/docs/build/mod-variables#input-variables) that can be configured to better match your environment and requirements.
 
-The easiest approach is to setup your vars file, starting with the example file:
+The easiest approach is to setup your `flowpipe.fpvars` file, starting with the example file:
 
 ```sh
 cp flowpipe.fpvars.example flowpipe.fpvars
