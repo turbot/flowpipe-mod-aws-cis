@@ -100,7 +100,7 @@ pipeline "cis_v400_5_1_1" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_regions_with_ebs_encryption_by_default_disabled
+    pipeline   = aws_compliance.pipeline.detect_and_correct_ebs_encryption_by_default_disabled_in_regions
 
     args = {
       database           = param.database
