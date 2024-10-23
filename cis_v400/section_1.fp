@@ -27,6 +27,7 @@ locals {
 
 pipeline "cis_v400_1" {
   title         = "1 Identity and Access Management"
+  description   = "This section contains recommendations for configuring identity and access management related options."
   documentation = file("./cis_v400/docs/cis_v400_1.md")
 
   tags = {
@@ -75,6 +76,7 @@ pipeline "cis_v400_1" {
 
 pipeline "cis_v400_1_1" {
   title         = "1.1 Maintain current contact details"
+  description   = "Ensure contact email and telephone details for AWS accounts are current and map to more than one individual in your organization."
   documentation = file("./cis_v400/docs/cis_v400_1_1.md")
 
   tags = {
