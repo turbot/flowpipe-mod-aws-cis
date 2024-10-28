@@ -31,14 +31,14 @@ locals {
     aws_compliance.pipeline.detect_and_correct_iam_users_with_unused_login_profile_45_days
   ]
   cis_v300_1_16_pipelines = [
-    aws_compliance.pipeline.detect_and_correct_iam_users_with_policy_star_star_attached,
+    aws_compliance.pipeline.detect_and_correct_iam_groups_with_policy_star_star_attached,
     aws_compliance.pipeline.detect_and_correct_iam_roles_with_policy_star_star_attached,
-    aws_compliance.pipeline.detect_and_correct_iam_groups_with_policy_star_star_attached
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_policy_star_star_attached
   ]
   cis_v300_1_22_pipelines = [
-    aws_compliance.pipeline.detect_and_correct_iam_users_with_unrestricted_cloudshell_full_access,
+    aws_compliance.pipeline.detect_and_correct_iam_groups_with_unrestricted_cloudshell_full_access,
     aws_compliance.pipeline.detect_and_correct_iam_roles_with_unrestricted_cloudshell_full_access,
-    aws_compliance.pipeline.detect_and_correct_iam_groups_with_unrestricted_cloudshell_full_access
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_unrestricted_cloudshell_full_access
   ]
 }
 
