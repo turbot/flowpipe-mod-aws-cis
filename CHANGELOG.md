@@ -1,3 +1,9 @@
+## v1.0.1 [2024-10-28]
+
+_Bug fixes_
+
+- Added missing checks to the 1.12, 1.16, and 1.22 pipelines in CIS v3.0.0 and v4.0.0. ([#3](https://github.com/turbot/flowpipe-mod-aws-cis/pull/3))
+
 ## v1.0.0 [2024-10-23]
 
 _What's new?_
