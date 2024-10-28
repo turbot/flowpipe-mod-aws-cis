@@ -25,6 +25,23 @@ locals {
   }
 }
 
+locals {
+  cis_v300_1_12_pipelines = [
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_unused_access_key_45_days,
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_unused_login_profile_45_days
+  ]
+  cis_v300_1_16_pipelines = [
+    aws_compliance.pipeline.detect_and_correct_iam_groups_with_policy_star_star_attached,
+    aws_compliance.pipeline.detect_and_correct_iam_roles_with_policy_star_star_attached,
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_policy_star_star_attached
+  ]
+  cis_v300_1_22_pipelines = [
+    aws_compliance.pipeline.detect_and_correct_iam_groups_with_unrestricted_cloudshell_full_access,
+    aws_compliance.pipeline.detect_and_correct_iam_roles_with_unrestricted_cloudshell_full_access,
+    aws_compliance.pipeline.detect_and_correct_iam_users_with_unrestricted_cloudshell_full_access
+  ]
+}
+
 pipeline "cis_v300_1" {
   title         = "1 Identity and Access Management"
   description   = "This section contains recommendations for configuring identity and access management related options."
@@ -640,7 +657,12 @@ pipeline "cis_v300_1_12" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_users_with_unused_access_key_45_days
+
+    loop {
+      until = loop.index >= (length(local.cis_v300_1_12_pipelines) - 1)
+    }
+
+    pipeline = local.cis_v300_1_12_pipelines[loop.index]
 
     args = {
       database           = param.database
@@ -844,7 +866,12 @@ pipeline "cis_v300_1_16" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_users_with_policy_star_star_attached
+
+    loop {
+      until = loop.index >= (length(local.cis_v300_1_16_pipelines) - 1)
+    }
+
+    pipeline = local.cis_v300_1_16_pipelines[loop.index]
 
     args = {
       database           = param.database
@@ -1150,7 +1177,12 @@ pipeline "cis_v300_1_22" {
 
   step "pipeline" "run_pipeline" {
     depends_on = [step.message.header]
-    pipeline   = aws_compliance.pipeline.detect_and_correct_iam_users_with_unrestricted_cloudshell_full_access
+
+    loop {
+      until = loop.index >= (length(local.cis_v300_1_22_pipelines) - 1)
+    }
+
+    pipeline = local.cis_v300_1_22_pipelines[loop.index]
 
     args = {
       database           = param.database
