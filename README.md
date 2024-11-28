@@ -46,18 +46,12 @@ For more information on importing connections, please see [Connection Import](ht
 
 For more information on connections in Flowpipe, please see [Managing Connections](https://flowpipe.io/docs/run/connections).
 
-Clone the mod:
+Install the mod:
 
 ```sh
 mkdir aws-cis
 cd aws-cis
-git clone git@github.com:turbot/flowpipe-mod-aws-cis.git
-```
-
-Install the dependencies:
-
-```sh
-flowpipe mod install
+flowpipe mod install github.com/turbot/flowpipe-mod-aws-cis
 ```
 
 ### Running CIS Pipelines
@@ -77,7 +71,7 @@ flowpipe pipeline list | grep "cis"
 Then run your chosen pipeline:
 
 ```sh
-flowpipe pipeline run cis_v400
+flowpipe pipeline run aws_cis.pipeline.cis_v400
 ```
 
 By default the above approach would find the relevant resources and then send a message to your configured [notifier](https://flowpipe.io/docs/reference/config-files/notifier).
@@ -96,14 +90,14 @@ vi flowpipe.fpvars
 Alternatively, you can pass variables on the command line:
 
 ```sh
-flowpipe pipeline run cis_v400 --var notifier=notifier.default
+flowpipe pipeline run aws_cis.pipeline.cis_v400 --var notifier=notifier.default
 ```
 
 Or through environment variables:
 
 ```sh
 export FP_VAR_notifier="notifier.default"
-flowpipe pipeline run cis_v400
+flowpipe pipeline run aws_cis.pipeline.cis_v400
 ```
 
 For more information, please see [Passing Input Variables](https://flowpipe.io/docs/build/mod-variables#passing-input-variables)

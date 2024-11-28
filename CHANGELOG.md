@@ -1,3 +1,9 @@
+## v1.0.2 (2024-11-28)
+
+_Enhancements_
+
+- Updated the README to include the latest mod installation instructions.
+
 ## v1.0.1 [2024-10-28]
 
 _Bug fixes_
